@@ -1,0 +1,34 @@
+<%- include("partials/header.ejs") %>
+<% if (locals.id) { %>
+   <form action="/update" method="post">
+      <textarea name="fName" class="fName" id="" placeholder="First name"><%= locals.fName %></textarea>
+      <textarea name="lName"  class="lName" id="" placeholder="Last name"> <%= locals.lName %> </textarea>
+      <textarea name="id" style="display: none;"> <%=locals.id%> </textarea>
+      <input type="submit" value="Update" >
+   </form>
+<% } else { %>
+   <form action="/submit" method="post">
+      <textarea name="fName" class="fName" id="" placeholder="First name"></textarea>
+      <textarea name="lName"  class="lName" id="" placeholder="Last name"></textarea>
+      <input type="submit" value="Save" >
+   </form>
+<% } %>
+ 
+ <% if (locals.names.length <1) { %>
+    <div class="nodata">
+        <p>No data.</p>
+    </div>
+<% } else {
+   for (let i = 0; i < locals.names.length; i++) { %>
+   
+ <div class="container">
+    <p class="no" > <%= i +1 %> </p>
+    <p class="fullName" name="fullName"> <%=locals.names[i].firstName + " " + locals.names[i].lastName %> </p>
+   
+    <form action="/edit" method="post">
+      <textarea name="id" style="display: none;"><%=i%></textarea><button class="edit">Edit</button></form>
+
+    <form action="/delete" method="post"><textarea name="id" style="display: none;"><%=i%></textarea><button class="delete">Delete</button></form>
+ </div>
+ <% } } %>
+<%- include("partials/footer.ejs") %>
